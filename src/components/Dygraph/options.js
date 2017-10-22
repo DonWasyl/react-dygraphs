@@ -84,6 +84,7 @@ const options = {
   rightGap: {type: p.number},
   rollPeriod: {type: p.number},
   series: true,
+  selection: {type: p.array},
   showInRangeSelector: {type: p.boolean},
   showLabelsOnHighlight: {type: p.boolean},
   showRangeSelector: {type: p.boolean},
