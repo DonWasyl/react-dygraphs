@@ -2,24 +2,55 @@
   "plugins": [
     "transform-class-properties"
   ],
-  "presets": [
-    [
-      "env", {
-      "debug": true,
-      "modules": false,
-      "targets": {
-        "chrome": 59,
-        "firefox": 54,
-        "edge": 14,
-        "safari": 11
-      }
-    }],
-    "react"
-  ],
   "env": {
     "test": {
+      "presets": [
+        [
+          "env", {
+          "debug": true,
+          "modules": false,
+          "targets": {
+            "chrome": 59,
+            "firefox": 54,
+            "edge": 14,
+            "safari": 11
+          }
+        }],
+        "react"
+      ],
       "plugins": [
         "istanbul"
+      ]
+    },
+    "commonjs": {
+      "presets": [
+        [
+          "env", {
+          "debug": true,
+          "targets": {
+            "chrome": 59,
+            "firefox": 54,
+            "edge": 14,
+            "safari": 11
+          }
+        }],
+        "react"
+      ]
+    },
+    "es2015": {
+      "presets": [
+        [
+          "env", {
+          "debug": true,
+          "modules": false,
+          "targets": {
+            "chrome": 59,
+            "firefox": 54,
+            "edge": 14,
+            "safari": 11
+          }
+        }],
+        "react"
       ]
     }
   }

@@ -35,7 +35,13 @@ export default class Dygraph extends React.Component {
     this._interactionProxy._target =
       initAttrs.interactionModel || DygraphBase.defaultInteractionModel
     initAttrs.interactionModel = this._interactionProxy
-    this._dygraph = new DygraphBase(this.root, this.props.data, initAttrs)
+    try {
+      this._dygraph = new DygraphBase(this.root, this.props.data, initAttrs)
+    } catch (err) {
+      if (!err.stack.startsWith('TypeError: Cannot read property \'hasOwnProperty\' of undefined')) {
+        throw err
+      }
+    }
   }
 
   componentWillUpdate (nextProps) {

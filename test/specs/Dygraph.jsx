@@ -1,6 +1,9 @@
-import { Dygraph } from '../../src'
+import Dygraph from '../../src'
 import React from 'react'
-import ShallowRenderer from 'react-test-renderer/shallow'
+import { configure, mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+configure({ adapter: new Adapter() })
 
 describe('Dygraph', function () {
   it('should be a function', function () {
@@ -10,9 +13,9 @@ describe('Dygraph', function () {
     expect(new Dygraph()).to.be.an.instanceof(React.Component)
   })
   it('should render a div', function () {
-    const renderer = new ShallowRenderer()
-    renderer.render(<Dygraph data={[]} />)
-    const result = renderer.getRenderOutput()
-    expect(result.type).to.equal('div')
+    const wrapper = mount(<Dygraph data={[]} />)
+    // eslint-disable-next-line no-unused-expressions
+    expect(wrapper.instance().root).to.not.be.undefined
+    expect(wrapper.contains(<div />)).to.equal(true)
   })
 })

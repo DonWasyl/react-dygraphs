@@ -10,25 +10,17 @@ module.exports = function (config) {
     ],
     exclude: [],
     preprocessors: {
-      'test/**': ['rollup', 'sourcemap'],
+      'test/**': ['webpack'],
     },
-    rollupPreprocessor: {
-      plugins: [
-        require('rollup-plugin-node-resolve')({
-          jsnext: true,
-          main: true,
-        }),
-        require('rollup-plugin-commonjs')(),
-        require('rollup-plugin-replace')({
-          'process.env.NODE_ENV': JSON.stringify('development'),
-        }),
-        require('rollup-plugin-babel')({
-          exclude: 'node_modules/**',
-        }),
-      ],
-      format: 'iife',
-      name: 'reactdygraphs',
-      sourcemap: 'inline',
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [{
+          test: /\.jsx?$/,
+          exclude: /\/node_modules\//,
+          loader: 'babel-loader',
+        }],
+      },
     },
     coverageReporter: {
       type: 'lcov',
