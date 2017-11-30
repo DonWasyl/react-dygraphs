@@ -1,7 +1,7 @@
 {
   "plugins": [
-    "transform-class-properties",
-    ["transform-object-rest-spread", { "useBuiltIns": true }]
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
   ],
   "env": {
     "test": {
@@ -10,9 +10,12 @@
       ],
       "presets": [
         [
-          "env", {
+          "@babel/preset-env", {
           "debug": true,
           "modules": false,
+          "exclude": [
+            "web.dom.iterable"
+          ],
           "targets": {
             "chrome": 62,
             "firefox": 57,
@@ -20,15 +23,19 @@
             "safari": 11
           }
         }],
-        "react"
+        "@babel/preset-react"
       ]
     },
     "es": {
       "presets": [
         [
-          "env", {
+          "@babel/preset-env", {
           "debug": true,
           "modules": false,
+          "useBuiltIns": "usage",
+          "exclude": [
+            "web.dom.iterable"
+          ],
           "targets": {
             "chrome": 62,
             "firefox": 57,
@@ -36,15 +43,19 @@
             "safari": 11
           }
         }],
-        "react"
+        "@babel/preset-react"
       ]
     },
     "cjs": {
       "presets": [
         [
-          "env", {
+          "@babel/preset-env", {
           "debug": true,
           "modules": "commonjs",
+          "useBuiltIns": "usage",
+          "exclude": [
+            "web.dom.iterable"
+          ],
           "targets": {
             "chrome": 62,
             "firefox": 57,
@@ -52,7 +63,7 @@
             "safari": 11
           }
         }],
-        "react"
+        "@babel/preset-react"
       ]
     }
   }
