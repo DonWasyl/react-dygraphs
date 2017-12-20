@@ -70,6 +70,16 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     const axes = dygraph.getOption('axes');
+    const originalHighlightCabllack = dygraph.getFunctionOption('highlightCallback');
+    let highlightCallback;
+
+    if (originalHighlightCabllack) {
+      highlightCallback = (event, x, points, row, seriesName) => {
+        originalHighlightCabllack.call(dygraph, event, x, points.map(point => Object.assign({}, point, {
+          yval: $this.rangeMap[point.name].formatValue(point.yval)
+        })), row, seriesName);
+      };
+    }
 
     axes.y.valueFormatter = (y, opts, seriesName) => {
       return $this.rangeMap[seriesName].formatValue(y);
@@ -87,6 +97,9 @@ var _initialiseProps = function _initialiseProps() {
     dygraph.updateOptions({ axes, valueRange: [0, 100] }, true);
 
     const predraw = e => {
+      if (highlightCallback) {
+        e.dygraph.attributes_.user_.highlightCallback = highlightCallback;
+      }
       e.dygraph.dataHandler_.seriesToPoints = seriesToPoints.bind(e.dygraph.dataHandler_);
     };
 
