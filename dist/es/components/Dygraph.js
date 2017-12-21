@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DygraphBase from 'dygraphs';
 import { propTypes as dygraphPropTypes, spreadProps as spreadKnownProps } from './Dygraph/options';
+import ChartBorder from '../plugins/ChartBorder';
 import FixedYAxis from '../plugins/FixedYAxis';
 import Normalize from '../plugins/Normalize';
 import Downsample from '../plugins/Downsample';
@@ -54,6 +55,10 @@ export default class Dygraph extends React.Component {
 
     if (!initAttrs.plugins) {
       initAttrs.plugins = [];
+    }
+
+    if (this.props.chartBorder) {
+      initAttrs.plugins.push(new ChartBorder());
     }
 
     if (this.props.normalize) {
@@ -118,6 +123,7 @@ export default class Dygraph extends React.Component {
 }
 Dygraph.propTypes = Object.assign({
   fixedYAxis: PropTypes.bool,
+  chartBorder: PropTypes.bool,
   downsample: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape({
     visibleThreshold: PropTypes.number,
     invisibleThreshold: PropTypes.number

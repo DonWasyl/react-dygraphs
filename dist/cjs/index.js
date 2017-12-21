@@ -3,11 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.StickyEdges = exports.Downsample = exports.Normalize = exports.FixedYAxis = exports.Dygraph = undefined;
+exports.StickyEdges = exports.Downsample = exports.Normalize = exports.FixedYAxis = exports.ChartBorder = exports.Dygraph = undefined;
 
 var _Dygraph = require('./components/Dygraph.js');
 
 var _Dygraph2 = _interopRequireDefault(_Dygraph);
+
+var _ChartBorder = require('./plugins/ChartBorder.js');
+
+var _ChartBorder2 = _interopRequireDefault(_ChartBorder);
 
 var _FixedYAxis = require('./plugins/FixedYAxis.js');
 
@@ -29,6 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _Dygraph2.default;
 exports.Dygraph = _Dygraph2.default;
+exports.ChartBorder = _ChartBorder2.default;
 exports.FixedYAxis = _FixedYAxis2.default;
 exports.Normalize = _Normalize2.default;
 exports.Downsample = _Downsample2.default;

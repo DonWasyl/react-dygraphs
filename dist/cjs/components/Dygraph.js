@@ -18,6 +18,10 @@ var _dygraphs2 = _interopRequireDefault(_dygraphs);
 
 var _options = require('./Dygraph/options');
 
+var _ChartBorder = require('../plugins/ChartBorder');
+
+var _ChartBorder2 = _interopRequireDefault(_ChartBorder);
+
 var _FixedYAxis = require('../plugins/FixedYAxis');
 
 var _FixedYAxis2 = _interopRequireDefault(_FixedYAxis);
@@ -88,6 +92,10 @@ class Dygraph extends _react2.default.Component {
       initAttrs.plugins = [];
     }
 
+    if (this.props.chartBorder) {
+      initAttrs.plugins.push(new _ChartBorder2.default());
+    }
+
     if (this.props.normalize) {
       initAttrs.plugins.push(new _Normalize2.default(this.props.normalize));
     }
@@ -151,6 +159,7 @@ class Dygraph extends _react2.default.Component {
 exports.default = Dygraph;
 Dygraph.propTypes = Object.assign({
   fixedYAxis: _propTypes2.default.bool,
+  chartBorder: _propTypes2.default.bool,
   downsample: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
     visibleThreshold: _propTypes2.default.number,
     invisibleThreshold: _propTypes2.default.number
