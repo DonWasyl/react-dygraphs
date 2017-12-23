@@ -18,6 +18,10 @@ var _dygraphs2 = _interopRequireDefault(_dygraphs);
 
 var _options = require('./Dygraph/options');
 
+var _ChartBackground = require('../plugins/ChartBackground');
+
+var _ChartBackground2 = _interopRequireDefault(_ChartBackground);
+
 var _ChartBorder = require('../plugins/ChartBorder');
 
 var _ChartBorder2 = _interopRequireDefault(_ChartBorder);
@@ -92,6 +96,14 @@ class Dygraph extends _react2.default.Component {
       initAttrs.plugins = [];
     }
 
+    if (this.props.chartBackground) {
+      if (typeof this.props.chartBackground === 'boolean') {
+        initAttrs.plugins.push(new _ChartBackground2.default());
+      } else {
+        initAttrs.plugins.push(new _ChartBackground2.default(this.props.chartBackground));
+      }
+    }
+
     if (this.props.chartBorder) {
       initAttrs.plugins.push(new _ChartBorder2.default());
     }
@@ -160,6 +172,7 @@ exports.default = Dygraph;
 Dygraph.propTypes = Object.assign({
   fixedYAxis: _propTypes2.default.bool,
   chartBorder: _propTypes2.default.bool,
+  chartBackground: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
   downsample: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
     visibleThreshold: _propTypes2.default.number,
     invisibleThreshold: _propTypes2.default.number
