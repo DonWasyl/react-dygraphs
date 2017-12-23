@@ -51,10 +51,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class InteractionModelProxy {
   constructor() {
     this._target = _dygraphs2.default.defaultInteractionModel;
-    var _arr = ['mousedown', 'touchstart', 'touchmove', 'touchend', 'dblclick'];
 
-    for (var _i = 0; _i < _arr.length; _i++) {
-      const method = _arr[_i];
+    for (const method of ['mousedown', 'touchstart', 'touchmove', 'touchend', 'dblclick']) {
       const thisProxy = this;
       this[method] = function (...args) {
         const calledContext = this;
@@ -96,16 +94,16 @@ class Dygraph extends _react2.default.Component {
       initAttrs.plugins = [];
     }
 
+    if (this.props.chartBorder) {
+      initAttrs.plugins.push(new _ChartBorder2.default());
+    }
+
     if (this.props.chartBackground) {
       if (typeof this.props.chartBackground === 'boolean') {
         initAttrs.plugins.push(new _ChartBackground2.default());
       } else {
         initAttrs.plugins.push(new _ChartBackground2.default(this.props.chartBackground));
       }
-    }
-
-    if (this.props.chartBorder) {
-      initAttrs.plugins.push(new _ChartBorder2.default());
     }
 
     if (this.props.normalize) {

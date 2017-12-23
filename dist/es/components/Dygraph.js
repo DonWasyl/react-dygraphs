@@ -13,10 +13,8 @@ import OptimizedDataHandler from '../datahandler/Optimized';
 class InteractionModelProxy {
   constructor() {
     this._target = DygraphBase.defaultInteractionModel;
-    var _arr = ['mousedown', 'touchstart', 'touchmove', 'touchend', 'dblclick'];
 
-    for (var _i = 0; _i < _arr.length; _i++) {
-      const method = _arr[_i];
+    for (const method of ['mousedown', 'touchstart', 'touchmove', 'touchend', 'dblclick']) {
       const thisProxy = this;
       this[method] = function (...args) {
         const calledContext = this;
@@ -58,16 +56,16 @@ export default class Dygraph extends React.Component {
       initAttrs.plugins = [];
     }
 
+    if (this.props.chartBorder) {
+      initAttrs.plugins.push(new ChartBorder());
+    }
+
     if (this.props.chartBackground) {
       if (typeof this.props.chartBackground === 'boolean') {
         initAttrs.plugins.push(new ChartBackground());
       } else {
         initAttrs.plugins.push(new ChartBackground(this.props.chartBackground));
       }
-    }
-
-    if (this.props.chartBorder) {
-      initAttrs.plugins.push(new ChartBorder());
     }
 
     if (this.props.normalize) {
