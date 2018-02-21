@@ -46,11 +46,21 @@ var _DateTickerWorkaround = require('../plugins/DateTickerWorkaround');
 
 var _DateTickerWorkaround2 = _interopRequireDefault(_DateTickerWorkaround);
 
+var _SupressEmptyDataError = require('../plugins/SupressEmptyDataError');
+
+var _SupressEmptyDataError2 = _interopRequireDefault(_SupressEmptyDataError);
+
+var _NoWarningRangeSelector = require('../plugins/NoWarningRangeSelector');
+
+var _NoWarningRangeSelector2 = _interopRequireDefault(_NoWarningRangeSelector);
+
 var _Optimized = require('../datahandler/Optimized');
 
 var _Optimized2 = _interopRequireDefault(_Optimized);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dygraphs2.default.PLUGINS[_dygraphs2.default.PLUGINS.indexOf(_dygraphs2.default.Plugins.RangeSelector)] = _NoWarningRangeSelector2.default;
 
 class InteractionModelProxy {
   constructor() {
@@ -98,6 +108,7 @@ class Dygraph extends _react2.default.Component {
       initAttrs.plugins = [];
     }
 
+    initAttrs.plugins.push(new _SupressEmptyDataError2.default());
     initAttrs.plugins.push(new _DateTickerWorkaround2.default());
 
     if (this.props.chartBorder) {
