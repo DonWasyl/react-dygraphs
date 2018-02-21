@@ -42,6 +42,10 @@ var _StickyEdges = require('../plugins/StickyEdges');
 
 var _StickyEdges2 = _interopRequireDefault(_StickyEdges);
 
+var _DateTickerWorkaround = require('../plugins/DateTickerWorkaround');
+
+var _DateTickerWorkaround2 = _interopRequireDefault(_DateTickerWorkaround);
+
 var _Optimized = require('../datahandler/Optimized');
 
 var _Optimized2 = _interopRequireDefault(_Optimized);
@@ -93,6 +97,8 @@ class Dygraph extends _react2.default.Component {
     if (!initAttrs.plugins) {
       initAttrs.plugins = [];
     }
+
+    initAttrs.plugins.push(new _DateTickerWorkaround2.default());
 
     if (this.props.chartBorder) {
       initAttrs.plugins.push(new _ChartBorder2.default());
