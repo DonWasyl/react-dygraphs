@@ -3,30 +3,46 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _dygraphUtils = require('dygraphs/src/dygraph-utils');
+
+const crossVisibilityChange = () => {
+  if (typeof document.hidden !== 'undefined') {
+    return 'visibilitychange';
+  } else if (typeof document.msHidden !== 'undefined') {
+    return 'msvisibilitychange';
+  } else if (typeof document.webkitHidden !== 'undefined') {
+    return 'webkitvisibilitychange';
+  }
+};
+
+const crossHidden = () => {
+  if (typeof document.hidden !== 'undefined') {
+    return 'hidden';
+  } else if (typeof document.msHidden !== 'undefined') {
+    return 'msHidden';
+  } else if (typeof document.webkitHidden !== 'undefined') {
+    return 'webkitHidden';
+  }
+};
+
 class VisibilityRedraw {
+  constructor() {
+    this.activate = dygraph => {
+      this.handleVisibilityChange = e => {
+        if (!document[crossHidden()]) {
+          dygraph.updateOptions({}, false);
+        }
+      };
 
-  activate(dygraph) {
-    let hidden, visibilityChange;
-
-    if (typeof document.hidden !== 'undefined') {
-      hidden = 'hidden';
-      visibilityChange = 'visibilitychange';
-    } else if (typeof document.msHidden !== 'undefined') {
-      hidden = 'msHidden';
-      visibilityChange = 'msvisibilitychange';
-    } else if (typeof document.webkitHidden !== 'undefined') {
-      hidden = 'webkitHidden';
-      visibilityChange = 'webkitvisibilitychange';
-    }
-
-    const handleVisibilityChange = e => {
-      if (!document[hidden]) {
-        dygraph.updateOptions({}, false);
-      }
+      (0, _dygraphUtils.addEvent)(document, crossVisibilityChange(), this.handleVisibilityChange);
     };
 
-    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    this.destroy = e => {
+      (0, _dygraphUtils.removeEvent)(document, crossVisibilityChange(), this.handleVisibilityChange);
+    };
   }
+
 }
 exports.default = VisibilityRedraw;
 
