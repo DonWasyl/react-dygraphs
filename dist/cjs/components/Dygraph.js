@@ -54,6 +54,10 @@ var _NoWarningRangeSelector = require('../plugins/NoWarningRangeSelector');
 
 var _NoWarningRangeSelector2 = _interopRequireDefault(_NoWarningRangeSelector);
 
+var _VisibilityRedraw = require('../plugins/VisibilityRedraw');
+
+var _VisibilityRedraw2 = _interopRequireDefault(_VisibilityRedraw);
+
 var _Optimized = require('../datahandler/Optimized');
 
 var _Optimized2 = _interopRequireDefault(_Optimized);
@@ -110,6 +114,7 @@ class Dygraph extends _react2.default.Component {
 
     initAttrs.plugins.push(new _SupressEmptyDataError2.default());
     initAttrs.plugins.push(new _DateTickerWorkaround2.default());
+    initAttrs.plugins.push(new _VisibilityRedraw2.default());
 
     if (this.props.chartBorder) {
       initAttrs.plugins.push(new _ChartBorder2.default());
