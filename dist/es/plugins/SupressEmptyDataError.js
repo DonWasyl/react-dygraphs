@@ -1,6 +1,4 @@
-import Dygraphs from 'dygraphs';
-
-export default class DateTickerWorkaround {
+export default class SupressEmptyDataError {
 
   activate(dygraph) {
     const originalParseArray = dygraph.parseArray_;
@@ -16,6 +14,6 @@ export default class DateTickerWorkaround {
   }
 }
 
-DateTickerWorkaround.toString = () => {
+SupressEmptyDataError.toString = () => {
   return 'SupressEmptyDataError Plugin';
 };

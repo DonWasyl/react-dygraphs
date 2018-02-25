@@ -36,6 +36,8 @@ class VisibilityRedraw {
       };
 
       (0, _dygraphUtils.addEvent)(document, crossVisibilityChange(), this.handleVisibilityChange);
+
+      return {};
     };
 
     this.destroy = e => {

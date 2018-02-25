@@ -101,6 +101,23 @@ export default class Dygraph extends React.Component {
     }
 
     this._dygraph = new DygraphBase(this.root, this.props.data, initAttrs);
+
+    let dateWindow;
+    const self = this;
+    Object.defineProperty(this._dygraph, 'dateWindow_', {
+      enumerable: true,
+      get() {
+        return dateWindow;
+      },
+      set(value) {
+        if (dateWindow === undefined || value[0] !== dateWindow[0] || value[1] !== dateWindow[1]) {
+          dateWindow = value;
+          if (self.props.onDateWindowChanged) {
+            self.props.onDateWindowChanged(value);
+          }
+        }
+      }
+    });
   }
 
   componentWillUpdate(nextProps) {
@@ -150,6 +167,7 @@ Dygraph.propTypes = Object.assign({
     notches: PropTypes.number,
     ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
   }),
+  onDateWindowChanged: PropTypes.func,
   stickyEdges: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape({
     left: PropTypes.bool,
     right: PropTypes.bool

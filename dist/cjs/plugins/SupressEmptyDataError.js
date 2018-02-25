@@ -3,14 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _dygraphs = require('dygraphs');
-
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-class DateTickerWorkaround {
+class SupressEmptyDataError {
 
   activate(dygraph) {
     const originalParseArray = dygraph.parseArray_;
@@ -25,8 +18,8 @@ class DateTickerWorkaround {
     return {};
   }
 }
-exports.default = DateTickerWorkaround;
+exports.default = SupressEmptyDataError;
 
-DateTickerWorkaround.toString = () => {
+SupressEmptyDataError.toString = () => {
   return 'SupressEmptyDataError Plugin';
 };

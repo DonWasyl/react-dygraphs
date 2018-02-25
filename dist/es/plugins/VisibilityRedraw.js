@@ -30,6 +30,8 @@ export default class VisibilityRedraw {
       };
 
       addEvent(document, crossVisibilityChange(), this.handleVisibilityChange);
+
+      return {};
     };
 
     this.destroy = e => {
