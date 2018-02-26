@@ -143,7 +143,7 @@ export default class Dygraph extends React.Component {
             self.props.onDateWindowChanged(value)
           }
         }
-      }
+      },
     })
   }
 
