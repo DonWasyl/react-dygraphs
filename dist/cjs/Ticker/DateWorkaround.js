@@ -145,7 +145,7 @@ var getDateAxis = exports.getDateAxis = function getDateAxis(startTime, endTime,
       tickTime = tickDate.getTime();
     }
     while (tickTime <= endTime) {
-      if (granularity >= _dygraphTickers.Granularity.DAILY || accessors.getHours(tickDate) % step === 0) {
+      if (granularity >= _dygraphTickers.Granularity.DAILY || utils.DateAccessorsUTC.getHours(tickDate) % step === 0) {
         ticks.push({ v: tickTime,
           label: formatter.call(dg, tickDate, granularity, opts, dg)
         });
