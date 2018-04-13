@@ -58,6 +58,10 @@ var _VisibilityRedraw = require('../plugins/VisibilityRedraw');
 
 var _VisibilityRedraw2 = _interopRequireDefault(_VisibilityRedraw);
 
+var _ConstrainDateWindow = require('../plugins/ConstrainDateWindow');
+
+var _ConstrainDateWindow2 = _interopRequireDefault(_ConstrainDateWindow);
+
 var _Optimized = require('../datahandler/Optimized');
 
 var _Optimized2 = _interopRequireDefault(_Optimized);
@@ -150,6 +154,10 @@ class Dygraph extends _react2.default.PureComponent {
       initAttrs.plugins.push(new _StickyEdges2.default(this.props.stickyEdges));
     }
 
+    if (this.props.constrainDateWindow) {
+      initAttrs.plugins.push(new _ConstrainDateWindow2.default());
+    }
+
     this._dygraph = new _dygraphs2.default(this.root, this.props.data, initAttrs);
 
     let dateWindow;
@@ -210,6 +218,7 @@ Dygraph.propTypes = Object.assign({
   fixedYAxis: _propTypes2.default.bool,
   chartBorder: _propTypes2.default.bool,
   chartBackground: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
+  constrainDateWindow: _propTypes2.default.bool,
   downsample: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
     visibleThreshold: _propTypes2.default.number,
     invisibleThreshold: _propTypes2.default.number
