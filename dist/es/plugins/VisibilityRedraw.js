@@ -1,5 +1,13 @@
 import { addEvent, removeEvent } from 'dygraphs/src/dygraph-utils';
 
+/**
+ * Attempts to fix Chrome canvas rendering issues when the window / tab
+ * is inactive
+ *
+ * https://stackoverflow.com/questions/44156528/canvas-doesnt-repaint-when-tab-inactive-backgrounded-for-recording-webgl
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=639105
+ */
+
 const crossVisibilityChange = () => {
   if (typeof document.hidden !== 'undefined') {
     return 'visibilitychange';
@@ -22,19 +30,27 @@ const crossHidden = () => {
 
 export default class VisibilityRedraw {
   constructor() {
-    this.activate = dygraph => {
-      this.handleVisibilityChange = e => {
-        if (!document[crossHidden()]) {
-          dygraph.updateOptions({}, false);
-        }
-      };
+    this.triggerRedraw = () => {
+      this.dygraph.updateOptions({}, false);
+    };
 
+    this.handleVisibilityChange = e => {
+      if (!document[crossHidden()]) {
+        this.triggerRedraw();
+      }
+    };
+
+    this.activate = dygraph => {
+      this.dygraph = dygraph;
+
+      addEvent(window, 'focus', this.triggerRedraw);
       addEvent(document, crossVisibilityChange(), this.handleVisibilityChange);
 
       return {};
     };
 
     this.destroy = e => {
+      removeEvent(window, 'focus', this.triggerRedraw);
       removeEvent(document, crossVisibilityChange(), this.handleVisibilityChange);
     };
   }
