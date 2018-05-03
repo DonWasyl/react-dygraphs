@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getDateAxis = exports.dateTicker = undefined;
+exports.getDateAxis = exports.pickDateTickGranularity = exports.TICK_PLACEMENT = exports.dateTicker = undefined;
 
 var _dygraphUtils = require('dygraphs/src/dygraph-utils');
 
@@ -34,7 +34,7 @@ const DateField = {
   NUM_DATEFIELDS: 7
 };
 
-const TICK_PLACEMENT = [];
+const TICK_PLACEMENT = exports.TICK_PLACEMENT = [];
 TICK_PLACEMENT[_dygraphTickers.Granularity.MILLISECONDLY] = { datefield: DateField.DATEFIELD_MS, step: 1, spacing: 1 };
 TICK_PLACEMENT[_dygraphTickers.Granularity.TWO_MILLISECONDLY] = { datefield: DateField.DATEFIELD_MS, step: 2, spacing: 2 };
 TICK_PLACEMENT[_dygraphTickers.Granularity.FIVE_MILLISECONDLY] = { datefield: DateField.DATEFIELD_MS, step: 5, spacing: 5 };
@@ -75,7 +75,7 @@ TICK_PLACEMENT[_dygraphTickers.Granularity.MONTHLY] = { datefield: DateField.DAT
    * @return {number} The appropriate axis granularity for this chart. See the
    *     enumeration of possible values in dygraph-tickers.js.
    */
-};const pickDateTickGranularity = (a, b, pixels, opts) => {
+};const pickDateTickGranularity = exports.pickDateTickGranularity = (a, b, pixels, opts) => {
   const pixelsPerTick = /** @type{number} */opts('pixelsPerLabel');
   for (let i = 0; i < _dygraphTickers.Granularity.NUM_GRANULARITIES; i++) {
     const numTicks = numDateTicks(a, b, i);

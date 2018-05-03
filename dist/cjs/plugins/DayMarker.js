@@ -8,6 +8,10 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _dygraphUtils = require('dygraphs/src/dygraph-utils');
 
+var _dygraphTickers = require('dygraphs/src/dygraph-tickers');
+
+var _DateWorkaround = require('../Ticker/DateWorkaround');
+
 class DayMarker {
 
   constructor(options = {}) {
@@ -41,25 +45,40 @@ class DayMarker {
           this.max = _dygraph$xAxisExtreme2[1];
         }
 
-        this.factor = Math.floor((this.max - this.min) / dygraph.layout_.getPlotArea().w);
+        const plotAreaWidth = dygraph.layout_.getPlotArea().w;
+        this.factor = Math.floor((this.max - this.min) / plotAreaWidth);
+        const granularity = (0, _DateWorkaround.pickDateTickGranularity)(this.min, this.max, plotAreaWidth, dygraph.optionsViewForAxis_('x'));
+
+        const step = this.getStepByGranularity(granularity);
 
         const temp = new Date(this.min);
         temp.setHours(0);
         temp.setMinutes(0);
         temp.setSeconds(0);
         temp.setMilliseconds(0);
+        temp.setDate(1);
+        temp.setDate(temp.getDate() - temp.getDay());
 
-        const toDraw = [];
+        if (granularity < _dygraphTickers.Granularity.WEEKLY && granularity > _dygraphTickers.Granularity.SIX_HOURLY) {
+          temp.setDate(temp.getDate() + temp.getDate() % 2);
+        }
+
+        const toDraw = [{
+          x: this.findDateX(this.min),
+          date: new Date(this.min)
+        }];
 
         while (temp.getTime() < this.max) {
           const pos = this.findDateX(temp.getTime());
 
-          toDraw.push({
-            x: pos,
-            date: new Date(temp.getTime())
-          });
+          if (temp.getTime() > this.min) {
+            toDraw.push({
+              x: pos,
+              date: new Date(temp.getTime())
+            });
+          }
 
-          temp.setDate(temp.getDate() + 1);
+          temp.setDate(temp.getDate() + step);
         }
 
         ctx.fillStyle = this.options.color;
@@ -93,6 +112,16 @@ class DayMarker {
 
   static formatDate(date) {
     return (0, _dygraphUtils.zeropad)(date.getDate()) + '/' + (0, _dygraphUtils.zeropad)(date.getMonth() + 1);
+  }
+
+  getStepByGranularity(granularity) {
+    if (granularity <= _dygraphTickers.Granularity.SIX_HOURLY) {
+      return 1;
+    } else if (granularity < _dygraphTickers.Granularity.TWO_DAILY) {
+      return 4;
+    }
+
+    return 7;
   }
 
 }

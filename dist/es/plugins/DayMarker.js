@@ -1,6 +1,8 @@
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 import { zeropad } from 'dygraphs/src/dygraph-utils';
+import { Granularity } from 'dygraphs/src/dygraph-tickers';
+import { pickDateTickGranularity } from '../Ticker/DateWorkaround';
 
 export default class DayMarker {
 
@@ -35,25 +37,40 @@ export default class DayMarker {
           this.max = _dygraph$xAxisExtreme2[1];
         }
 
-        this.factor = Math.floor((this.max - this.min) / dygraph.layout_.getPlotArea().w);
+        const plotAreaWidth = dygraph.layout_.getPlotArea().w;
+        this.factor = Math.floor((this.max - this.min) / plotAreaWidth);
+        const granularity = pickDateTickGranularity(this.min, this.max, plotAreaWidth, dygraph.optionsViewForAxis_('x'));
+
+        const step = this.getStepByGranularity(granularity);
 
         const temp = new Date(this.min);
         temp.setHours(0);
         temp.setMinutes(0);
         temp.setSeconds(0);
         temp.setMilliseconds(0);
+        temp.setDate(1);
+        temp.setDate(temp.getDate() - temp.getDay());
 
-        const toDraw = [];
+        if (granularity < Granularity.WEEKLY && granularity > Granularity.SIX_HOURLY) {
+          temp.setDate(temp.getDate() + temp.getDate() % 2);
+        }
+
+        const toDraw = [{
+          x: this.findDateX(this.min),
+          date: new Date(this.min)
+        }];
 
         while (temp.getTime() < this.max) {
           const pos = this.findDateX(temp.getTime());
 
-          toDraw.push({
-            x: pos,
-            date: new Date(temp.getTime())
-          });
+          if (temp.getTime() > this.min) {
+            toDraw.push({
+              x: pos,
+              date: new Date(temp.getTime())
+            });
+          }
 
-          temp.setDate(temp.getDate() + 1);
+          temp.setDate(temp.getDate() + step);
         }
 
         ctx.fillStyle = this.options.color;
@@ -87,6 +104,16 @@ export default class DayMarker {
 
   static formatDate(date) {
     return zeropad(date.getDate()) + '/' + zeropad(date.getMonth() + 1);
+  }
+
+  getStepByGranularity(granularity) {
+    if (granularity <= Granularity.SIX_HOURLY) {
+      return 1;
+    } else if (granularity < Granularity.TWO_DAILY) {
+      return 4;
+    }
+
+    return 7;
   }
 
 }
