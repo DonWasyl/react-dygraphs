@@ -226,7 +226,13 @@ Dygraph.propTypes = Object.assign({
   chartBorder: _propTypes2.default.bool,
   chartBackground: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
   constrainDateWindow: _propTypes2.default.bool,
-  dayMarker: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({})]),
+  dayMarker: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
+    color: _propTypes2.default.string,
+    dateFormatter: _propTypes2.default.func,
+    font: _propTypes2.default.string,
+    fontSize: _propTypes2.default.number,
+    markerMargin: _propTypes2.default.number
+  })]),
   downsample: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
     visibleThreshold: _propTypes2.default.number,
     invisibleThreshold: _propTypes2.default.number
