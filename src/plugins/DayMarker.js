@@ -1,10 +1,27 @@
+import { zeropad } from 'dygraphs/src/dygraph-utils'
+
 export default class DayMarker {
-  constructor (color = 'rgba(0, 0, 0, 0.4)') {
-    this.color = color
+  static defaultOptions = {
+    color: 'rgba(0, 0, 0, 0.4)',
+    dateFormatter: DayMarker.formatDate,
+    font: 'sans serif',
+    fontSize: 32,
+    markerMargin: 10,
+  }
+
+  constructor (options = {}) {
+    this.options = {
+      ...options,
+      ...DayMarker.defaultOptions,
+    }
   }
 
   static toString = () => {
     return 'DayMarker Plugin'
+  }
+
+  static formatDate (date) {
+    return zeropad(date.getDate()) + '/' + zeropad(date.getMonth() + 1)
   }
 
   findDateX = (timestamp) => {
@@ -17,14 +34,6 @@ export default class DayMarker {
     }
 
     return Math.floor((timestamp - this.min) / this.factor) + this.dygraph.layout_.getPlotArea().x
-  }
-
-  drawDate = (ctx, x, text) => {
-    const fontSize = 32
-
-    ctx.fillStyle = this.color
-    ctx.font = fontSize + 'px sans serif'
-    ctx.fillText(text, x + 10, fontSize)
   }
 
   activate = (dygraph) => {
@@ -48,11 +57,33 @@ export default class DayMarker {
       temp.setSeconds(0)
       temp.setMilliseconds(0)
 
+      const toDraw = []
+
       while (temp.getTime() < this.max) {
         const pos = this.findDateX(temp.getTime())
 
-        this.drawDate(ctx, pos, temp.getDate())
+        toDraw.push({
+          x: pos,
+          date: new Date(temp.getTime()),
+        })
+
         temp.setDate(temp.getDate() + 1)
+      }
+
+      ctx.fillStyle = this.options.color
+      ctx.font = this.options.fontSize + 'px ' + this.options.font
+
+      for (let i = 0; i < toDraw.length; i++) {
+        const text = this.options.dateFormatter(toDraw[i].date)
+        const metrics = ctx.measureText(text)
+
+        let pos = toDraw[i].x + this.options.markerMargin
+
+        if (i + 1 < toDraw.length) {
+          pos = Math.min(pos, toDraw[i + 1].x - metrics.width - this.options.markerMargin)
+        }
+
+        ctx.fillText(text, pos, this.options.fontSize)
       }
 
       if (originalCallback) {
