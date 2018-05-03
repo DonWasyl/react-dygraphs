@@ -1,0 +1,103 @@
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+import { zeropad } from 'dygraphs/src/dygraph-utils';
+
+export default class DayMarker {
+
+  constructor(options = {}) {
+    this.findDateX = timestamp => {
+      if (timestamp > this.max) {
+        return null;
+      }
+
+      if (timestamp < this.min) {
+        timestamp = this.min;
+      }
+
+      return Math.floor((timestamp - this.min) / this.factor) + this.dygraph.layout_.getPlotArea().x;
+    };
+
+    this.activate = dygraph => {
+      this.dygraph = dygraph;
+
+      const originalCallback = dygraph.getFunctionOption('underlayCallback');
+
+      let underlayCallback = (ctx, area, dygraph) => {
+        if (dygraph.dateWindow_) {
+          this.min = dygraph.dateWindow_[0];
+          this.max = dygraph.dateWindow_[1];
+        } else {
+          var _dygraph$xAxisExtreme = dygraph.xAxisExtremes();
+
+          var _dygraph$xAxisExtreme2 = _slicedToArray(_dygraph$xAxisExtreme, 2);
+
+          this.min = _dygraph$xAxisExtreme2[0];
+          this.max = _dygraph$xAxisExtreme2[1];
+        }
+
+        this.factor = Math.floor((this.max - this.min) / dygraph.layout_.getPlotArea().w);
+
+        const temp = new Date(this.min);
+        temp.setHours(0);
+        temp.setMinutes(0);
+        temp.setSeconds(0);
+        temp.setMilliseconds(0);
+
+        const toDraw = [];
+
+        while (temp.getTime() < this.max) {
+          const pos = this.findDateX(temp.getTime());
+
+          toDraw.push({
+            x: pos,
+            date: new Date(temp.getTime())
+          });
+
+          temp.setDate(temp.getDate() + 1);
+        }
+
+        ctx.fillStyle = this.options.color;
+        ctx.font = this.options.fontSize + 'px ' + this.options.font;
+
+        for (let i = 0; i < toDraw.length; i++) {
+          const text = this.options.dateFormatter(toDraw[i].date);
+          const metrics = ctx.measureText(text);
+
+          let pos = toDraw[i].x + this.options.markerMargin;
+
+          if (i + 1 < toDraw.length) {
+            pos = Math.min(pos, toDraw[i + 1].x - metrics.width - this.options.markerMargin);
+          }
+
+          ctx.fillText(text, pos, this.options.fontSize);
+        }
+
+        if (originalCallback) {
+          originalCallback.call(dygraph, ctx, area, dygraph);
+        }
+      };
+
+      dygraph.updateOptions({ underlayCallback }, true);
+
+      return {};
+    };
+
+    this.options = Object.assign({}, options, DayMarker.defaultOptions);
+  }
+
+  static formatDate(date) {
+    return zeropad(date.getDate()) + '/' + zeropad(date.getMonth() + 1);
+  }
+
+}
+DayMarker.defaultOptions = {
+  color: 'rgba(0, 0, 0, 0.4)',
+  dateFormatter: DayMarker.formatDate,
+  font: 'sans serif',
+  fontSize: 32,
+  markerMargin: 10
+};
+
+DayMarker.toString = () => {
+  return 'DayMarker Plugin';
+};

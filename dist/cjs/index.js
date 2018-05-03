@@ -3,11 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.StickyEdges = exports.Downsample = exports.Normalize = exports.FixedYAxis = exports.ChartBorder = exports.ChartBackground = exports.Dygraph = undefined;
+exports.StickyEdges = exports.Downsample = exports.Normalize = exports.FixedYAxis = exports.DayMarker = exports.ChartBorder = exports.ChartBackground = exports.Dygraph = undefined;
 
 var _Dygraph = require('./components/Dygraph.js');
 
 var _Dygraph2 = _interopRequireDefault(_Dygraph);
+
+var _DayMarker = require('./plugins/DayMarker.js');
+
+var _DayMarker2 = _interopRequireDefault(_DayMarker);
 
 var _ChartBackground = require('./plugins/ChartBackground.js');
 
@@ -39,6 +43,7 @@ exports.default = _Dygraph2.default;
 exports.Dygraph = _Dygraph2.default;
 exports.ChartBackground = _ChartBackground2.default;
 exports.ChartBorder = _ChartBorder2.default;
+exports.DayMarker = _DayMarker2.default;
 exports.FixedYAxis = _FixedYAxis2.default;
 exports.Normalize = _Normalize2.default;
 exports.Downsample = _Downsample2.default;

@@ -18,6 +18,10 @@ var _dygraphs2 = _interopRequireDefault(_dygraphs);
 
 var _options = require('./Dygraph/options');
 
+var _DayMarker = require('../plugins/DayMarker');
+
+var _DayMarker2 = _interopRequireDefault(_DayMarker);
+
 var _ChartBackground = require('../plugins/ChartBackground');
 
 var _ChartBackground2 = _interopRequireDefault(_ChartBackground);
@@ -120,6 +124,9 @@ class Dygraph extends _react2.default.PureComponent {
     initAttrs.plugins.push(new _DateTickerWorkaround2.default());
     initAttrs.plugins.push(new _VisibilityRedraw2.default());
 
+    if (this.props.dayMarker) {
+      initAttrs.plugins.push(new _DayMarker2.default());
+    }
     if (this.props.chartBorder) {
       initAttrs.plugins.push(new _ChartBorder2.default());
     }
@@ -219,6 +226,7 @@ Dygraph.propTypes = Object.assign({
   chartBorder: _propTypes2.default.bool,
   chartBackground: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
   constrainDateWindow: _propTypes2.default.bool,
+  dayMarker: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({})]),
   downsample: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.shape({
     visibleThreshold: _propTypes2.default.number,
     invisibleThreshold: _propTypes2.default.number
