@@ -124,7 +124,7 @@ export default class DayMarker {
 DayMarker.defaultOptions = {
   color: 'rgba(0, 0, 0, 0.4)',
   dateFormatter: DayMarker.formatDate,
-  font: 'sans serif',
+  font: 'sans-serif',
   fontSize: 32,
   markerMargin: 10
 };
