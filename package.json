@@ -1,5 +1,5 @@
 {
-  "name": "@qogni/react-dygraphs",
+  "name": "@zenedge/react-dygraphs",
   "version": "0.0.3",
   "description": "",
   "module": "dist/es/index.js",
@@ -20,13 +20,12 @@
   "author": "Moti Zilberman <motiz88@gmail.com>",
   "contributors": [
     {
-      "name": "Rodrigo Saboya",
-      "email": "saboya@users.noreply.github.com"
+      "name": "Aurimas Kancavicius",
+      "email": "aurimas.kancavicius@oracle.com"
     }
   ],
   "license": "MIT",
   "devDependencies": {
-    "@qogni/dygraphs": "^2.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
