@@ -41,7 +41,7 @@ class InteractionModelProxy {
   _target = DygraphBase.defaultInteractionModel
 }
 
-export default class Dygraph extends React.PureComponent {
+export default class Dygraph extends React.Component {
   displayName = 'Dygraph'
 
   static propTypes = {
@@ -83,6 +83,11 @@ export default class Dygraph extends React.PureComponent {
     ]),
     style: PropTypes.object,
     ...dygraphPropTypes,
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = { labels: [] }
   }
 
   componentDidMount () {
@@ -146,6 +151,13 @@ export default class Dygraph extends React.PureComponent {
 
     this._dygraph = new DygraphBase(this.root, this.props.data, initAttrs)
 
+    const labels = this._dygraph.getLabels().slice(1).map(label => {
+      console.log(label, this._dygraph.getPropertiesForSeries(label))
+      return { name: label, color: this._dygraph.getPropertiesForSeries(label).color}
+    })
+
+    this.setState({ labels })
+
     let dateWindow
     const self = this
     Object.defineProperty(this._dygraph, 'dateWindow_', {
@@ -199,7 +211,6 @@ export default class Dygraph extends React.PureComponent {
   render () {
     let innerDivStyle = { ...this.props.style }
 
-
     return (
       <div>
         <div
@@ -207,7 +218,7 @@ export default class Dygraph extends React.PureComponent {
           style={this.props.style}
         />
 
-        <DygraphSeriesToggle />
+        <DygraphSeriesToggle labels={ this.state.labels }/>
       </div>
     )
   }

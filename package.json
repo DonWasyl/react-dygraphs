@@ -82,6 +82,7 @@
   },
   "dependencies": {
     "downsample-lttb": "0.0.1",
-    "dygraphs": "^2.1.0"
+    "dygraphs": "^2.1.0",
+    "uuid": "^3.3.2"
   }
 }
