@@ -15,6 +15,7 @@ import NoWarningRangeSelector from '../plugins/NoWarningRangeSelector'
 import VisibilityRedraw from '../plugins/VisibilityRedraw'
 import ConstrainDateWindow from '../plugins/ConstrainDateWindow'
 import OptimizedDataHandler from '../datahandler/Optimized'
+import DygraphSeriesToggle from './DygraphSeriesToggle'
 
 DygraphBase.PLUGINS[DygraphBase.PLUGINS.indexOf(DygraphBase.Plugins.RangeSelector)] = NoWarningRangeSelector
 
@@ -196,11 +197,18 @@ export default class Dygraph extends React.PureComponent {
   _interactionProxy = new InteractionModelProxy()
 
   render () {
+    let innerDivStyle = { ...this.props.style }
+
+
     return (
-      <div
-        ref={(root) => (this.root = root)}
-        style={this.props.style}
-      />
+      <div>
+        <div
+          ref={(root) => (this.root = root)}
+          style={this.props.style}
+        />
+
+        <DygraphSeriesToggle />
+      </div>
     )
   }
 }
