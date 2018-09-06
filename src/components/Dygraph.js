@@ -15,7 +15,6 @@ import NoWarningRangeSelector from '../plugins/NoWarningRangeSelector'
 import VisibilityRedraw from '../plugins/VisibilityRedraw'
 import ConstrainDateWindow from '../plugins/ConstrainDateWindow'
 import OptimizedDataHandler from '../datahandler/Optimized'
-import DygraphSeriesToggle from './DygraphSeriesToggle'
 
 DygraphBase.PLUGINS[DygraphBase.PLUGINS.indexOf(DygraphBase.Plugins.RangeSelector)] = NoWarningRangeSelector
 
@@ -154,7 +153,6 @@ export default class Dygraph extends React.Component {
     this._dygraph = new DygraphBase(this.root, this.props.data, initAttrs)
 
     const labels = this._dygraph.getLabels().slice(1).map(label => {
-      console.log(label, this._dygraph.getPropertiesForSeries(label))
       return { name: label, color: this._dygraph.getPropertiesForSeries(label).color, checked: true }
     })
 
@@ -235,8 +233,7 @@ export default class Dygraph extends React.Component {
           ref={(root) => (this.root = root)}
           style={this.props.style}
         />
-
-        <DygraphSeriesToggle labels={ this.state.labels } onLabelStateChange={ this.onLabelStateChange }/>
+        { this.props.renderSeriesToggle && this.props.renderSeriesToggle(this.state.labels, this.onLabelStateChange) }
       </div>
     )
   }
