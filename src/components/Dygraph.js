@@ -88,6 +88,8 @@ export default class Dygraph extends React.Component {
   constructor (props) {
     super(props)
     this.state = { labels: [] }
+
+    this.onLabelStateChange = this.onLabelStateChange.bind(this)
   }
 
   componentDidMount () {
@@ -153,7 +155,7 @@ export default class Dygraph extends React.Component {
 
     const labels = this._dygraph.getLabels().slice(1).map(label => {
       console.log(label, this._dygraph.getPropertiesForSeries(label))
-      return { name: label, color: this._dygraph.getPropertiesForSeries(label).color}
+      return { name: label, color: this._dygraph.getPropertiesForSeries(label).color, checked: true }
     })
 
     this.setState({ labels })
@@ -206,6 +208,22 @@ export default class Dygraph extends React.Component {
     }
   }
 
+  onLabelStateChange(name, checked) {
+    this.setState(oldState => {
+      return {
+        labels: oldState.labels.map((label, index) => {
+          if (label.name === name) {
+            this._dygraph.setVisibility(index, checked)
+
+            return { ...label, checked }
+          }
+
+          return label
+        })
+      }
+    })
+  }
+
   _interactionProxy = new InteractionModelProxy()
 
   render () {
@@ -218,7 +236,7 @@ export default class Dygraph extends React.Component {
           style={this.props.style}
         />
 
-        <DygraphSeriesToggle labels={ this.state.labels }/>
+        <DygraphSeriesToggle labels={ this.state.labels } onLabelStateChange={ this.onLabelStateChange }/>
       </div>
     )
   }
