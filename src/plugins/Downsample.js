@@ -1,5 +1,5 @@
 import Downsampler from 'downsample-lttb'
-import { addEvent, removeEvent } from 'dygraphs/src/dygraph-utils'
+import { addEvent, removeEvent } from 'dygraphs'
 import Dygraphs from 'dygraphs/index.es5'
 
 const getRangeSelectorCanvas = dygraph => {

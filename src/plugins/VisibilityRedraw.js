@@ -1,4 +1,4 @@
-import { addEvent, removeEvent } from 'dygraphs/src/dygraph-utils'
+import { addEvent, removeEvent } from 'dygraphs'
 
 /**
  * Attempts to fix Chrome canvas rendering issues when the window / tab
