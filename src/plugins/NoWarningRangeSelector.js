@@ -1,4 +1,4 @@
-import Dygraph from 'dygraphs'
+import Dygraph from 'dygraphs/index.es5'
 
 export default class NoWarningRangeSelector extends Dygraph.Plugins.RangeSelector {
   computeCombinedSeriesAndLimits_ = () => {
