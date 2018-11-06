@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _dygraphs = require('dygraphs');
+var _index = require('dygraphs/index.es5');
 
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
+var _index2 = _interopRequireDefault(_index);
 
 var _DateWorkaround = require('../Ticker/DateWorkaround');
 
@@ -26,7 +26,7 @@ class DateTickerWorkaround {
 
       return opt => {
         if (opt === 'ticker') {
-          if (original.call(dygraph, opt) === _dygraphs2.default.dateTicker) {
+          if (original.call(dygraph, opt) === _index2.default.dateTicker) {
             return _DateWorkaround.dateTicker;
           }
         }

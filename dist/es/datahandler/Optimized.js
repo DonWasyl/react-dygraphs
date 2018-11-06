@@ -1,4 +1,4 @@
-import Dygraphs from 'dygraphs';
+import Dygraphs from 'dygraphs/index.es5';
 
 const parseFloat = val => val === null ? NaN : val;
 

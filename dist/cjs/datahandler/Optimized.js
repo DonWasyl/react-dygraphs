@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _dygraphs = require('dygraphs');
+var _index = require('dygraphs/index.es5');
 
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const parseFloat = val => val === null ? NaN : val;
 
 // https://github.com/danvk/dygraphs/pull/896
-class OptimizedDataHandler extends _dygraphs2.default.DataHandlers.DefaultHandler {
+class OptimizedDataHandler extends _index2.default.DataHandlers.DefaultHandler {
   constructor(...args) {
     var _temp;
 

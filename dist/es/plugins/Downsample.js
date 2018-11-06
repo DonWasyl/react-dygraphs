@@ -2,7 +2,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 import Downsampler from 'downsample-lttb';
 import { addEvent, removeEvent } from 'dygraphs/src/dygraph-utils';
-import Dygraphs from 'dygraphs';
+import Dygraphs from 'dygraphs/index.es5';
 
 const getRangeSelectorCanvas = dygraph => {
   return dygraph.plugins_.find(p => p.plugin instanceof Dygraphs.Plugins.RangeSelector).plugin.fgcanvas_;

@@ -12,9 +12,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _dygraphs = require('dygraphs');
+var _index = require('dygraphs/index.es5');
 
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
+var _index2 = _interopRequireDefault(_index);
 
 var _options = require('./Dygraph/options');
 
@@ -72,11 +72,11 @@ var _Optimized2 = _interopRequireDefault(_Optimized);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dygraphs2.default.PLUGINS[_dygraphs2.default.PLUGINS.indexOf(_dygraphs2.default.Plugins.RangeSelector)] = _NoWarningRangeSelector2.default;
+_index2.default.PLUGINS[_index2.default.PLUGINS.indexOf(_index2.default.Plugins.RangeSelector)] = _NoWarningRangeSelector2.default;
 
 class InteractionModelProxy {
   constructor() {
-    this._target = _dygraphs2.default.defaultInteractionModel;
+    this._target = _index2.default.defaultInteractionModel;
 
     for (const method of ['mousedown', 'touchstart', 'touchmove', 'touchend', 'dblclick']) {
       const thisProxy = this;
@@ -113,7 +113,7 @@ class Dygraph extends _react2.default.Component {
 
     const initAttrs = _spreadKnownProps.known;
 
-    this._interactionProxy._target = initAttrs.interactionModel || _dygraphs2.default.defaultInteractionModel;
+    this._interactionProxy._target = initAttrs.interactionModel || _index2.default.defaultInteractionModel;
     initAttrs.interactionModel = this._interactionProxy;
 
     if (!initAttrs.dataHandler) {
@@ -169,7 +169,7 @@ class Dygraph extends _react2.default.Component {
       initAttrs.plugins.push(new _ConstrainDateWindow2.default());
     }
 
-    this._dygraph = new _dygraphs2.default(this.root, this.props.data, initAttrs);
+    this._dygraph = new _index2.default(this.root, this.props.data, initAttrs);
 
     const labels = this._dygraph.getLabels().slice(1).map(label => {
       return { name: label, color: this._dygraph.getPropertiesForSeries(label).color, checked: true };
@@ -201,7 +201,7 @@ class Dygraph extends _react2.default.Component {
 
       const updateAttrs = _spreadKnownProps2.known;
 
-      this._interactionProxy._target = updateAttrs.interactionModel || _dygraphs2.default.defaultInteractionModel;
+      this._interactionProxy._target = updateAttrs.interactionModel || _index2.default.defaultInteractionModel;
       updateAttrs.interactionModel = this._interactionProxy;
 
       if (this.props.normalize && this.props.normalize !== prevProps.normalize) {

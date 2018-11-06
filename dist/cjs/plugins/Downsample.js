@@ -12,14 +12,14 @@ var _downsampleLttb2 = _interopRequireDefault(_downsampleLttb);
 
 var _dygraphUtils = require('dygraphs/src/dygraph-utils');
 
-var _dygraphs = require('dygraphs');
+var _index = require('dygraphs/index.es5');
 
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const getRangeSelectorCanvas = dygraph => {
-  return dygraph.plugins_.find(p => p.plugin instanceof _dygraphs2.default.Plugins.RangeSelector).plugin.fgcanvas_;
+  return dygraph.plugins_.find(p => p.plugin instanceof _index2.default.Plugins.RangeSelector).plugin.fgcanvas_;
 };
 
 class Downsample {

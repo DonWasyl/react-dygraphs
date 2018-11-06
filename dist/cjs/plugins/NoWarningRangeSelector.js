@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _dygraphs = require('dygraphs');
+var _index = require('dygraphs/index.es5');
 
-var _dygraphs2 = _interopRequireDefault(_dygraphs);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class NoWarningRangeSelector extends _dygraphs2.default.Plugins.RangeSelector {
+class NoWarningRangeSelector extends _index2.default.Plugins.RangeSelector {
   constructor(...args) {
     var _temp;
 

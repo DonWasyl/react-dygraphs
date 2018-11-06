@@ -2,8 +2,8 @@
   "name": "@DonWasyl/react-dygraphs",
   "version": "0.0.3",
   "description": "",
-  "module": "dist/es/index.js",
-  "jsnext:main": "dist/es/index.js",
+  "module": "dist/cjs/index.js",
+  "jsnext:main": "dist/cjs/index.js",
   "main": "dist/cjs/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=test BABEL_ENV=test webpack-dev-server",
